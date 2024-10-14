@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -77,9 +77,9 @@ const Login = () => {
                 or
               </p>
 
-              <a href="#" className="flex-2 underline">
+              <Link to={"/register"} className="flex-2 underline">
                 Create an Account
-              </a>
+              </Link>
             </div>
           </form>
         </div>

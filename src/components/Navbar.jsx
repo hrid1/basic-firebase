@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -21,7 +20,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-slate-900">
+    <div className="navbar bg-slate-900 sticky top-0 z-10">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -56,8 +55,12 @@ const Navbar = () => {
         {/* <a className="btn">User</a> */}
 
         <div className="space-x-4">
-          <Link to={'/login'} className="btn btn-primary">Log In</Link>
-          <Link to={'/register'} className="btn btn-primary">Register</Link>
+          <Link to={"/login"} className="btn btn-primary">
+            Log In
+          </Link>
+          <Link to={"/register"} className="btn btn-primary">
+            Register
+          </Link>
         </div>
       </div>
     </div>
