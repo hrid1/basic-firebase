@@ -5,6 +5,7 @@ import {
 import { useState, useTransition } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase/firebase.config";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [success, setSuccess] = useState("");
@@ -33,12 +34,19 @@ const Login = () => {
       });
   };
 
+  // forgot password
+
   const handleForgotPassword = () => {
     console.log(email);
     sendPasswordResetEmail(auth, email)
       .then(() => alert("Check Your Email"))
       .catch((error) => setError(error.message));
   };
+
+  // show & hide password
+  const [showPassword, setShowPassword] = useState(false);
+  console.log(showPassword);
+
   return (
     <div className="flex flex-col my-10 bg-gray-00 ">
       {/* Auth Card Container */}
@@ -69,7 +77,6 @@ const Login = () => {
               type="email"
               name="email"
               placeholder="e-mail address"
-              autoComplete="email"
               className="block bg-white w-full py-3 px-2 mt-2 
             text-gray-800 appearance-none 
             border-b-2 border-gray-100
@@ -84,20 +91,27 @@ const Login = () => {
             >
               Password
             </label>
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              id="password"
-              type="password"
-              name="password"
-              placeholder="password"
-              autoComplete="current-password"
-              className="block w-full py-3 px-2 mt-2 mb-4
+            <div className=" relative">
+              <input
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                id="password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="password"
+                className="block w-full py-3 px-2 mt-2 mb-4
             text-gray-800 bg-white appearance-none 
             border-b-2 border-gray-100
            rounded"
-              required
-            />
+                required
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-xl text-gray-800 cursor-pointer absolute bottom-4 right-4"
+              >
+                {showPassword ?  <FaEye /> : <FaEyeSlash /> }
+              </span>
+            </div>
 
             {/* Auth Button */}
             <button

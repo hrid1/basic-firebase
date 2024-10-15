@@ -8,13 +8,16 @@ import { Link } from "react-router-dom";
 import { auth } from "../../firebase/firebase.config";
 
 const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+ 
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
   const handleRegister = (e) => {
     e.preventDefault();
+
+    setSuccess("")
+    setError("")
+    // 
     const username = e.target.username.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
