@@ -1,6 +1,33 @@
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase/firebase.config";
 
 const Navbar = () => {
+  const [currentUser, setcurrentUser] = useState(null);
+
+
+  useEffect(() => {
+    const unSubscirbe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setcurrentUser(user);
+      } else {
+        setcurrentUser(null);
+      }
+    });
+
+    return () => unSubscirbe();
+  }, []);
+
+  // Log out
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => alert("Logout Successful"))
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
   const navLinks = (
     <>
       <li>
@@ -55,12 +82,23 @@ const Navbar = () => {
         {/* <a className="btn">User</a> */}
 
         <div className="space-x-4">
-          <Link to={"/login"} className="btn btn-primary">
-            Log In
-          </Link>
-          <Link to={"/register"} className="btn btn-primary">
-            Register
-          </Link>
+          {currentUser ? (
+            <div className="flex gap-4 items-center justify-center">
+              <p className="font-bold">Hi, {currentUser?.displayName}</p>
+              <button onClick={handleLogout} className="btn btn-primary ">
+                Log out
+              </button>
+            </div>
+          ) : (
+            <div className="space-x-4">
+              <Link to={"/login"} className="btn btn-primary">
+                Log In
+              </Link>
+              <Link to={"/register"} className="btn btn-primary">
+                Register
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
